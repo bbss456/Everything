@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  shopping_db:
+    platform: linux/x86_64
+    image: mysql:8.0
+    container_name: shopping_db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: shoppingmall
+    ports:
+      - "3306:3306"
+    volumes:
+      - ../shopping_db:/var/lib/mysql
+      - ../shopping_db-conf:/etc/mysql/conf.d
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    networks:
+      - pwang
+    restart: always
+
+networks:
+  pwang:
+    driver: bridge

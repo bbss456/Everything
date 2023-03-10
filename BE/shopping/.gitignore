@@ -35,3 +35,7 @@ out/
 
 ### VS Code ###
 .vscode/
+
+###mysql###
+shopping_db/
+shopping_db-conf/

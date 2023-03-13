@@ -45,7 +45,7 @@
         </div>
       </form>
       <div class="flex justify-center  md:w-full pt-3">
-          <button class="inline-flex items-center justify-center w-12 h-12 mr-2 text-pink-100 transition-colors duration-150 rounded-full focus:shadow-outline">
+          <button class="inline-flex items-center justify-center w-12 h-12 mr-2 text-pink-100 transition-colors duration-150 rounded-full focus:shadow-outline" @click="naver">
             <img   src="https://clove.kr/wJk/img/sns/naver_icon.png"/>
           </button>
 
@@ -66,17 +66,27 @@
 
 <script>
  import clickOutSide from "@mahdikhashan/vue3-click-outside";
+ const  redirectUri = 'http://localhost:8081/login/oauth2/code/naver';
+ const  clientId = 'aqITYOSde48YsU2LTjJB';
 export default {
   
-
   data () {
     return {
-      user: undefined
+      user: undefined,
+      naverURL : "https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id="+clientId+"&redirect_uri="+redirectUri+"&state=1234",
     }
   },
   methods: {
     customMethod() {
       this.$emit("setlogin", false, 1);
+    },
+
+    naver() {
+      console.log("네이버 console 로그");
+      console.log(this.naverURL);
+      window.location.href =this.naverURL;
+      console.log(window.location.search);
+       // [axios http 요청 수행 실시]
     },
   
   },

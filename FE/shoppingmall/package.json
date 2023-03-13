@@ -11,6 +11,7 @@
     "@headlessui/vue": "^1.7.12",
     "@heroicons/vue": "^2.0.16",
     "@mahdikhashan/vue3-click-outside": "^0.1.2",
+    "axios": "^1.3.4",
     "core-js": "^3.8.3",
     "v-click-outside": "^3.2.0",
     "vue": "^3.2.13",

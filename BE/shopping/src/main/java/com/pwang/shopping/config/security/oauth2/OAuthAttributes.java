@@ -3,12 +3,16 @@ package com.pwang.shopping.config.security.oauth2;
 import com.pwang.shopping.domain.member.entity.Member;
 import com.pwang.shopping.domain.member.entity.Role;
 import lombok.*;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 import java.util.Map;
 
 @Getter
 @Builder
-@RequiredArgsConstructor
 public class OAuthAttributes {
     private final Map<String, Object> attributes;
     private final String nameAttributeKey;
@@ -17,6 +21,12 @@ public class OAuthAttributes {
     private final String picture;
     private final String gender;
     private final String age;
+
+    @Value("${spring.security.oauth2.client.registration.naver.client-id}")
+    private  String clientId;
+
+    @Value("${spring.security.oauth2.client.registration.naver.client-secret}")
+    private  String clientSecret;
 
     public static OAuthAttributes of(String registrationId, String userNameAttributeName, Map<String, Object> attributes) {
         if("naver".equals(registrationId)) {
@@ -47,4 +57,5 @@ public class OAuthAttributes {
                 .role(Role.USER)
                 .build();
     }
+
 }

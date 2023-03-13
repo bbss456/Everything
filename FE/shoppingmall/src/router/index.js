@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
+import Test_Loing from '../views/Test-Loing.vue'
 import Home from '../views/Home.vue'
 import InputTag from '../components/first-view.vue';
 import NotFound from "../views/NotFound.vue";
@@ -12,6 +13,13 @@ const routes = [
       name: "Home",
       component: Home,
     },
+
+    {
+      path: "/login/oauth2/code/naver",
+      name: "TestTest_Loingoing",
+      component: Test_Loing,
+    },
+
 
     {
       path: "/login",

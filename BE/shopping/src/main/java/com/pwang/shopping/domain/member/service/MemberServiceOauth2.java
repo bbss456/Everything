@@ -5,6 +5,9 @@ import com.pwang.shopping.domain.member.entity.Member;
 import com.pwang.shopping.domain.member.entity.SessionUser;
 import com.pwang.shopping.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -13,6 +16,8 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 import javax.servlet.http.HttpSession;
 import java.util.Collections;
@@ -23,7 +28,11 @@ public class MemberServiceOauth2 implements OAuth2UserService<OAuth2UserRequest,
 
     private final MemberRepository memberRepository ;
 
-    private final HttpSession httpSession;
+    @Value("${spring.security.oauth2.client.registration.naver.client-id}")
+    private  String clientId;
+
+    @Value("${spring.security.oauth2.client.registration.naver.client-secret}")
+    private  String clientSecret;
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
@@ -53,4 +62,19 @@ public class MemberServiceOauth2 implements OAuth2UserService<OAuth2UserRequest,
 
         return memberRepository.save(user);
     }
+
+    public HttpEntity<MultiValueMap<String, String>> generateAuthCodeRequest(String code, String state) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-type", "application/x-www-form-urlencoded");
+
+        MultiValueMap<String, String> paramList = new LinkedMultiValueMap<>();
+        paramList.add("grant_type", "authorization_code");
+        paramList.add("client_id", clientId);
+        paramList.add("client_secret", clientSecret);
+        paramList.add("code", code);
+        paramList.add("state", state);
+
+        return new HttpEntity<>(paramList, headers);
+    }
+
 }

@@ -24,10 +24,18 @@ public class Member {
 
     private String name;
 
- //   @Enumerated(EnumType.STRING)
+   @Enumerated(EnumType.STRING)
     private Role role;
 
     public String getRoleKey() {
         return this.role.getKey();
+    }
+
+    public Member makeEntity(String name, String email) {
+        return Member.builder()
+                .name(name)
+                .email(email)
+                .role(Role.USER)
+                .build();
     }
 }

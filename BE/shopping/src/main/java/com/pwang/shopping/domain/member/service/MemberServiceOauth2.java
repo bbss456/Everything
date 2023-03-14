@@ -1,13 +1,21 @@
 package com.pwang.shopping.domain.member.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nimbusds.jose.shaded.json.JSONObject;
+import com.nimbusds.jose.shaded.json.parser.JSONParser;
+import com.nimbusds.jose.shaded.json.parser.ParseException;
+import com.pwang.shopping.config.security.oauth2.MemberOAuthDTO.NaverOAuthDTO;
 import com.pwang.shopping.config.security.oauth2.OAuthAttributes;
 import com.pwang.shopping.domain.member.entity.Member;
+import com.pwang.shopping.domain.member.entity.Role;
 import com.pwang.shopping.domain.member.entity.SessionUser;
 import com.pwang.shopping.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -24,7 +32,7 @@ import java.util.Collections;
 
 @Service
 @RequiredArgsConstructor
-public class MemberServiceOauth2 implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
+public class MemberServiceOauth2 {
 
     private final MemberRepository memberRepository ;
 
@@ -33,35 +41,6 @@ public class MemberServiceOauth2 implements OAuth2UserService<OAuth2UserRequest,
 
     @Value("${spring.security.oauth2.client.registration.naver.client-secret}")
     private  String clientSecret;
-
-    @Override
-    public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-        OAuth2UserService<OAuth2UserRequest, OAuth2User> delegate = new DefaultOAuth2UserService();
-        OAuth2User oAuth2User = delegate.loadUser(userRequest);
-
-        String registrationId = userRequest.getClientRegistration().getRegistrationId();
-
-        String userNameAttributeName = userRequest.getClientRegistration().getProviderDetails()
-                .getUserInfoEndpoint().getUserNameAttributeName();
-        // naver, kakao 로그인 구분
-        OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
-
-        Member member = saveOrUpdate(attributes);
-        //httpSession.setAttribute("user", new SessionUser(member));
-
-        return new DefaultOAuth2User(
-                Collections.singleton(new SimpleGrantedAuthority(member.getRoleKey())),
-                attributes.getAttributes(),
-                attributes.getNameAttributeKey());
-    }
-
-
-    private Member saveOrUpdate(OAuthAttributes attributes) {
-        Member user = memberRepository.findByEmail(attributes.getEmail())
-                .orElse(attributes.toEntity());
-
-        return memberRepository.save(user);
-    }
 
     public HttpEntity<MultiValueMap<String, String>> generateAuthCodeRequest(String code, String state) {
         HttpHeaders headers = new HttpHeaders();
@@ -77,4 +56,29 @@ public class MemberServiceOauth2 implements OAuth2UserService<OAuth2UserRequest,
         return new HttpEntity<>(paramList, headers);
     }
 
+    public HttpEntity<HttpHeaders> getNaverProfile(ResponseEntity<String> accessTokenResponse) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        NaverOAuthDTO naverOAuthDTO = objectMapper.readValue(accessTokenResponse.getBody(), NaverOAuthDTO.class);
+
+        HttpHeaders profileRequestHeader = new HttpHeaders();
+        profileRequestHeader.add("Authorization", "Bearer " + naverOAuthDTO.getAccess_token());
+
+        return new HttpEntity<>(profileRequestHeader);
+    }
+
+    public String authOrSaveWithGetEmail(String profile) throws ParseException {
+
+        JSONParser parser = new JSONParser();
+        JSONObject naverjsonObject = (JSONObject) parser.parse(profile);
+        naverjsonObject = (JSONObject) naverjsonObject.get("response");
+        String email = (String) naverjsonObject.get("email");
+        String name = (String) naverjsonObject.get("name");
+        System.out.println(email);
+
+        Member member = new Member();
+        member = memberRepository.findByEmail(email)
+                .orElse(member.makeEntity(email, name));
+        memberRepository.save(member);
+        return member.getEmail();
+    }
 }

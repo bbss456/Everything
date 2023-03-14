@@ -4,10 +4,6 @@ import com.pwang.shopping.domain.member.entity.Member;
 import com.pwang.shopping.domain.member.entity.Role;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 
 import java.util.Map;
 

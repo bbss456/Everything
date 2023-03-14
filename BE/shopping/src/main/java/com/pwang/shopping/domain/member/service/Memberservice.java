@@ -27,8 +27,9 @@ public class Memberservice {
                 .password(passwordEncoder.encode(memberCreateRequestDTO.getPassword()))
                 .build();
 
-
         memberRepository.save(member);
         return Boolean.TRUE;
     }
+
+
 }

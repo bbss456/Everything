@@ -1,36 +1,35 @@
-package com.pwang.shopping.config.security.oauth2;
-
-
+package com.pwang.shopping.global.auth.oauth2;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.nimbusds.jose.shaded.json.JSONObject;
-import com.nimbusds.jose.shaded.json.parser.JSONParser;
 import com.nimbusds.jose.shaded.json.parser.ParseException;
-import com.pwang.shopping.config.security.oauth2.MemberOAuthDTO.NaverOAuthDTO;
+import com.pwang.shopping.domain.member.entity.Member;
 import com.pwang.shopping.domain.member.service.MemberServiceOauth2;
+import com.pwang.shopping.global.auth.jwt.responseDTO.JwtTokenResponseDTO;
+import com.pwang.shopping.global.auth.jwt.service.JwtService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.HashMap;
-import java.util.Map;
+import java.nio.charset.Charset;
 
 @RestController
 @RequiredArgsConstructor
 public class OAuthController {
 
     private final MemberServiceOauth2 memberServiceOauth2;
+    private final JwtService jwtService;
+
+    public HttpHeaders header() {
+        HttpHeaders header = new HttpHeaders();
+        header.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
+        return  header;
+    }
 
     @GetMapping("/auth/naver")
-    public String naverToken(@RequestParam String code, @RequestParam String state) throws ParseException, JsonProcessingException {
+    public ResponseEntity<JwtTokenResponseDTO> naverToken(@RequestParam String code, @RequestParam String state) throws ParseException, JsonProcessingException {
         RestTemplate restTemplate = new RestTemplate();
 
         HttpHeaders accessTokenHeaders = new HttpHeaders();
@@ -53,25 +52,8 @@ public class OAuthController {
                 String.class
         );
 
-        String email = memberServiceOauth2.authOrSaveWithGetEmail(profileResponse.getBody());
-        System.out.println(email);
-        return "accessToken: " + accessTokenResponse.getBody();
+        Member member = memberServiceOauth2.authOrSaveWithGetEmail(profileResponse.getBody());
+
+        return new ResponseEntity<JwtTokenResponseDTO>(jwtService.createToken(member), this.header() , HttpStatus.OK);
     }
-
-    @GetMapping("/login")
-    public String test(@RequestParam String code, @RequestParam String state) {
-        RestTemplate restTemplate = new RestTemplate();
-
-        HttpEntity<MultiValueMap<String, String>> accessTokenRequest  = memberServiceOauth2.generateAuthCodeRequest(code, state);
-        System.out.println("asd");
-        ResponseEntity<String> accessTokenResponse = restTemplate.exchange(
-                "https://nid.naver.com/oauth2.0/token",
-                HttpMethod.POST,
-                accessTokenRequest,
-                String.class
-        );
-
-        return "Success";
-    }
-
 }

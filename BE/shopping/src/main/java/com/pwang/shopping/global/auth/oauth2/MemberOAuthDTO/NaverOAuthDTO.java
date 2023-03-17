@@ -1,10 +1,9 @@
-package com.pwang.shopping.config.security.oauth2.MemberOAuthDTO;
+package com.pwang.shopping.global.auth.oauth2.MemberOAuthDTO;
 
 import lombok.Data;
 
 @Data
 public class NaverOAuthDTO {
-
 
     private String access_token;
     private String refresh_token;

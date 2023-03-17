@@ -14,8 +14,8 @@ import org.springframework.stereotype.Service;
 
 public class Memberservice {
 
-    @Autowired
-    MemberRepository memberRepository;
+
+    private final MemberRepository memberRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -31,5 +31,9 @@ public class Memberservice {
         return Boolean.TRUE;
     }
 
+    public Member findMember(String email) {
 
+        Member member = memberRepository.findByEmail(email).orElseThrow();
+        return member;
+    }
 }

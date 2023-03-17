@@ -3,6 +3,7 @@ package com.pwang.shopping.domain.member.controller;
 import com.pwang.shopping.domain.member.entity.Member;
 import com.pwang.shopping.domain.member.requestDTO.MemberCreateRequestDTO;
 import com.pwang.shopping.domain.member.service.Memberservice;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.info.ProjectInfoProperties;
 import org.springframework.http.HttpHeaders;
@@ -20,10 +21,11 @@ import java.nio.charset.Charset;
 
 @RestController
 @RequestMapping("/shopping")
+@RequiredArgsConstructor
 public class MemberController {
 
-    @Autowired
-    Memberservice memberservice;
+    private final Memberservice memberservice;
+
 
     public HttpHeaders header() {
         HttpHeaders header = new HttpHeaders();

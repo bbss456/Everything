@@ -1,10 +1,9 @@
-package com.pwang.shopping.config.security.oauth2;
+package com.pwang.shopping.global.auth.oauth2;
 
 import com.pwang.shopping.domain.member.entity.Member;
 import com.pwang.shopping.domain.member.entity.Role;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Value;
-
 import java.util.Map;
 
 @Getter

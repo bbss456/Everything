@@ -1,7 +1,12 @@
-package com.pwang.shopping.config.security.config;
+package com.pwang.shopping.global.config;
 
 import com.pwang.shopping.domain.member.entity.Role;
 import com.pwang.shopping.domain.member.service.MemberServiceOauth2;
+import com.pwang.shopping.global.auth.jwt.AuthenticationEntryPointHandler;
+import com.pwang.shopping.global.auth.jwt.JwtAccessDeniedHandler;
+import com.pwang.shopping.global.auth.jwt.JwtAuthenticationFilter;
+import com.pwang.shopping.global.auth.jwt.JwtTokenProvider;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,34 +15,40 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfiguration{
 
-    @Autowired
-    MemberServiceOauth2 memberServiceOauth2;
+
+    private final MemberServiceOauth2 memberServiceOauth2;
+
+    JwtAuthenticationFilter jwtAuthenticationFilter(JwtTokenProvider jwtTokenProvider) {
+        return new JwtAuthenticationFilter(jwtTokenProvider);
+    }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http, JwtTokenProvider jwtTokenProvider) throws Exception {
         http.csrf().disable()
                 .cors().configurationSource(corsConfigurationSource())
                 .and()
                 .authorizeRequests()
                 .antMatchers("/", "/css/**", "/images/**", "/js/**", "/profile").permitAll()
                 .antMatchers("/auth/**").permitAll()
+                .antMatchers("/oauth2/**").permitAll()
                 .antMatchers("/api/**").hasRole(Role.GUEST.name())
-                .anyRequest().authenticated();
-                //.and()
-                //.logout().logoutSuccessUrl("/").
-//                .and()
-//                .oauth2Login()
-//                .userInfoEndpoint()
-//                .userService(memberServiceOauth2);
-
+                .anyRequest().authenticated()
+                .and()
+                .exceptionHandling().authenticationEntryPoint(new AuthenticationEntryPointHandler())
+                .accessDeniedHandler(new JwtAccessDeniedHandler())
+                .and()
+                .addFilterBefore(jwtAuthenticationFilter(jwtTokenProvider),
+                        UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 

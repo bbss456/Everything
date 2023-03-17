@@ -5,30 +5,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nimbusds.jose.shaded.json.JSONObject;
 import com.nimbusds.jose.shaded.json.parser.JSONParser;
 import com.nimbusds.jose.shaded.json.parser.ParseException;
-import com.pwang.shopping.config.security.oauth2.MemberOAuthDTO.NaverOAuthDTO;
-import com.pwang.shopping.config.security.oauth2.OAuthAttributes;
+import com.pwang.shopping.global.auth.oauth2.MemberOAuthDTO.NaverOAuthDTO;
 import com.pwang.shopping.domain.member.entity.Member;
-import com.pwang.shopping.domain.member.entity.Role;
-import com.pwang.shopping.domain.member.entity.SessionUser;
 import com.pwang.shopping.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
-import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
-import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
-import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
-import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-
-import javax.servlet.http.HttpSession;
-import java.util.Collections;
 
 @Service
 @RequiredArgsConstructor
@@ -66,19 +53,18 @@ public class MemberServiceOauth2 {
         return new HttpEntity<>(profileRequestHeader);
     }
 
-    public String authOrSaveWithGetEmail(String profile) throws ParseException {
-
+    public Member authOrSaveWithGetEmail(String profile) throws ParseException {
         JSONParser parser = new JSONParser();
         JSONObject naverjsonObject = (JSONObject) parser.parse(profile);
         naverjsonObject = (JSONObject) naverjsonObject.get("response");
         String email = (String) naverjsonObject.get("email");
         String name = (String) naverjsonObject.get("name");
-        System.out.println(email);
 
         Member member = new Member();
         member = memberRepository.findByEmail(email)
                 .orElse(member.makeEntity(email, name));
         memberRepository.save(member);
-        return member.getEmail();
+
+        return member;
     }
 }

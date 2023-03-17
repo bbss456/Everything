@@ -30,7 +30,7 @@ public class Member {
         return this.role.getKey();
     }
 
-    public Member makeEntity(String name, String email) {
+    public Member makeEntity(String email, String name) {
         return Member.builder()
                 .name(name)
                 .email(email)

@@ -1,11 +1,11 @@
-package com.pwang.shopping.domain.auth.oauth2.controller;
+package com.pwang.shopping.domain.auth.oauth2.naver.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.nimbusds.jose.shaded.json.parser.ParseException;
 import com.pwang.shopping.domain.auth.jwt.responseDTO.JwtTokenResponseDTO;
 import com.pwang.shopping.domain.auth.jwt.service.JwtService;
 import com.pwang.shopping.domain.member.entity.Member;
-import com.pwang.shopping.domain.member.service.MemberServiceOauth2;
+import com.pwang.shopping.domain.auth.oauth2.naver.service.MemberServiceOauth2;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
 import org.springframework.util.MultiValueMap;

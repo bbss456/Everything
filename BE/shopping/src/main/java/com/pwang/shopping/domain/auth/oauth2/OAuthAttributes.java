@@ -1,4 +1,4 @@
-package com.pwang.shopping.global.auth.oauth2;
+package com.pwang.shopping.domain.auth.oauth2;
 
 import com.pwang.shopping.domain.member.entity.Member;
 import com.pwang.shopping.domain.member.entity.Role;

@@ -1,13 +1,12 @@
-package com.pwang.shopping.global.config;
+package com.pwang.shopping.global.config.security;
 
 import com.pwang.shopping.domain.member.entity.Role;
 import com.pwang.shopping.domain.member.service.MemberServiceOauth2;
-import com.pwang.shopping.global.auth.jwt.AuthenticationEntryPointHandler;
-import com.pwang.shopping.global.auth.jwt.JwtAccessDeniedHandler;
-import com.pwang.shopping.global.auth.jwt.JwtAuthenticationFilter;
-import com.pwang.shopping.global.auth.jwt.JwtTokenProvider;
+import com.pwang.shopping.global.config.jwt.AuthenticationEntryPointHandler;
+import com.pwang.shopping.global.config.jwt.JwtAccessDeniedHandler;
+import com.pwang.shopping.global.config.jwt.JwtAuthenticationFilter;
+import com.pwang.shopping.global.config.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

@@ -1,4 +1,4 @@
-package com.pwang.shopping.global.auth.jwt;
+package com.pwang.shopping.global.config.jwt;
 
 import com.nimbusds.jose.shaded.json.JSONObject;
 import org.springframework.security.access.AccessDeniedException;

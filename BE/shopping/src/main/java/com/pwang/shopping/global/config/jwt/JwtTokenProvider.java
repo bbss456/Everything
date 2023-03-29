@@ -1,4 +1,4 @@
-package com.pwang.shopping.global.auth.jwt;
+package com.pwang.shopping.global.config.jwt;
 
 import com.pwang.shopping.domain.member.entity.CustumMemberDetail;
 import com.pwang.shopping.domain.member.service.MemberJwtCuscomService;

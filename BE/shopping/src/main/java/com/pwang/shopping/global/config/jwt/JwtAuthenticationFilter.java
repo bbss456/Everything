@@ -1,4 +1,4 @@
-package com.pwang.shopping.global.auth.jwt;
+package com.pwang.shopping.global.config.jwt;
 
 import java.io.IOException;
 import lombok.RequiredArgsConstructor;

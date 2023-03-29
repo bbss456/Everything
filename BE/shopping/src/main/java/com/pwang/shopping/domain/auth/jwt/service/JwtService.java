@@ -1,8 +1,8 @@
-package com.pwang.shopping.global.auth.jwt.service;
+package com.pwang.shopping.domain.auth.jwt.service;
 
 import com.pwang.shopping.domain.member.entity.Member;
-import com.pwang.shopping.global.auth.jwt.JwtTokenProvider;
-import com.pwang.shopping.global.auth.jwt.responseDTO.JwtTokenResponseDTO;
+import com.pwang.shopping.global.config.jwt.JwtTokenProvider;
+import com.pwang.shopping.domain.auth.jwt.responseDTO.JwtTokenResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

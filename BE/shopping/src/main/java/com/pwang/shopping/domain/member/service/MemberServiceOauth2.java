@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nimbusds.jose.shaded.json.JSONObject;
 import com.nimbusds.jose.shaded.json.parser.JSONParser;
 import com.nimbusds.jose.shaded.json.parser.ParseException;
-import com.pwang.shopping.global.auth.oauth2.MemberOAuthDTO.NaverOAuthDTO;
+import com.pwang.shopping.domain.auth.oauth2.MemberOAuthDTO.NaverOAuthDTO;
 import com.pwang.shopping.domain.member.entity.Member;
 import com.pwang.shopping.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;

@@ -1,5 +1,6 @@
 package com.pwang.shopping.global.auth.jwt;
 
+import com.pwang.shopping.global.config.jwt.JwtTokenProvider;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

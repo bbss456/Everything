@@ -32,6 +32,7 @@ public class OAuthController {
     public ResponseEntity<JwtTokenResponseDTO> naverToken(@RequestParam String code, @RequestParam String state) throws ParseException, JsonProcessingException {
         RestTemplate restTemplate = new RestTemplate();
 
+
         HttpHeaders accessTokenHeaders = new HttpHeaders();
         accessTokenHeaders.add("Content-type", "application/x-www-form-urlencoded");
         HttpEntity<MultiValueMap<String, String>> accessTokenRequest  = memberServiceOauth2.generateAuthCodeRequest(code, state);

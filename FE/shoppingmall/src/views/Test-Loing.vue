@@ -11,7 +11,7 @@ export default {
      var url = 'http://localhost:8080/auth/naver';
      var param = [];
      var count = 0;
-     console.log("안녕");
+     
      const searchParams = new URLSearchParams(location.search);
      console.log(param)
      for (const urlparam of searchParams) {

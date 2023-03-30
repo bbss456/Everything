@@ -52,8 +52,8 @@
             <img   src="../assets/free-icon-kakao-talk-4494622.png" />
           </button>
 
-          <button class="inline-flex items-center justify-center w-12 h-8 mr-2 text-pink-100 transition-colors duration-150  rounded-full focus:shadow-outline ">
-               <img src="https://lh3.googleusercontent.com/jUoaTIlBn5ibfQcND2n5OMD6Z7xoqNj-ShHlFR6QuLffLXD5pS8V2eNg1rGlrsRrnDkoQ28O8UHzqzBQKAGY4l1CS2NQSq2SkRScK6FOjl82jppyohK-" />
+          <button class="inline-flex items-center justify-center w-12 h-12 mr-2 text-pink-100 transition-colors duration-150  rounded-full focus:shadow-outline " >
+            <img  class="h-11" src="../assets/chrome.png"  height="10"/>
           </button>
 
 

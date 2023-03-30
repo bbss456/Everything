@@ -58,11 +58,10 @@ public class MemberServiceOauth2 {
         JSONObject naverjsonObject = (JSONObject) parser.parse(profile);
         naverjsonObject = (JSONObject) naverjsonObject.get("response");
         String email = (String) naverjsonObject.get("email");
-        String name = (String) naverjsonObject.get("name");
 
         Member member = new Member();
         member = memberRepository.findByEmail(email)
-                .orElse(member.makeEntity(email, name));
+                .orElse(member.makeEntityOfNamver(naverjsonObject));
         memberRepository.save(member);
 
         return member;

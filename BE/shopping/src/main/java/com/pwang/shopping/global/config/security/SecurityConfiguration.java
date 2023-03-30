@@ -40,8 +40,9 @@ public class SecurityConfiguration{
                 .antMatchers("/", "/css/**", "/images/**", "/js/**", "/profile").permitAll()
                 .antMatchers("/auth/**").permitAll()
                 .antMatchers("/oauth2/**").permitAll()
-                .antMatchers("/api/**").hasRole(Role.GUEST.name())
+                .antMatchers("/api/**").hasRole(Role.USER.name())
                 .anyRequest().authenticated()
+
                 .and()
                 .exceptionHandling().authenticationEntryPoint(new AuthenticationEntryPointHandler())
                 .accessDeniedHandler(new JwtAccessDeniedHandler())

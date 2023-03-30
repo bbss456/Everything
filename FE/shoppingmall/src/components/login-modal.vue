@@ -1,6 +1,5 @@
 <template>
 <div x-data="{show:false}">
-  <div class="flex items-center justify-center mt-40"></div>
   <div class="overlay" @click="$emit('close-modal', false)"> </div>
   <div x-show="show"
       x-transition:enter="transition ease-out duration-300"

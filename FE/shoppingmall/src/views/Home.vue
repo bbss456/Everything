@@ -5,7 +5,7 @@
 
  <headerComponent v-bind:message="message" @setlogin="setlogin"></headerComponent>
   <!-- <span>{{ $store.state.name}} </span> -->
- <a href="https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=aqITYOSde48YsU2LTjJB&scope=name%20email&state=wrz8y39l8wvI4K3QOQCF5rgLVTqmJBTh2a2nhEjhowQ%3D&redirect_uri=http://localhost:8081/login/oauth2/code/naver" role="button" class="btn btn-outline-success"> 로그인</a>
+ 
   <div class="grid grid-cols-4 gap-4">
   <div class="black-bg" v-if="modarBoolean==true">
     <div class="white-bg">
@@ -75,9 +75,9 @@ export default {
     },
  
     setlogin(togle, count) {
-
       this.controlModal(togle, count);
     }
+  
   },
 
   components: {

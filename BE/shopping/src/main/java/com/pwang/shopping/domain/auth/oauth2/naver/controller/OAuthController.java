@@ -52,7 +52,6 @@ public class OAuthController {
         );
 
         Member member = memberServiceOauth2.authOrSaveWithGetEmail(profileResponse.getBody());
-
         return new ResponseEntity<JwtTokenResponseDTO>(jwtService.createToken(member), this.header() , HttpStatus.OK);
     }
 }

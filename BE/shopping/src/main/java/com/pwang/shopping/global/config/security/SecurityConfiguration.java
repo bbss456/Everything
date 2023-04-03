@@ -24,9 +24,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @RequiredArgsConstructor
 public class SecurityConfiguration{
 
-
-    private final MemberServiceOauth2 memberServiceOauth2;
-
     JwtAuthenticationFilter jwtAuthenticationFilter(JwtTokenProvider jwtTokenProvider) {
         return new JwtAuthenticationFilter(jwtTokenProvider);
     }
@@ -42,7 +39,6 @@ public class SecurityConfiguration{
                 .antMatchers("/oauth2/**").permitAll()
                 .antMatchers("/api/**").hasRole(Role.USER.name())
                 .anyRequest().authenticated()
-
                 .and()
                 .exceptionHandling().authenticationEntryPoint(new AuthenticationEntryPointHandler())
                 .accessDeniedHandler(new JwtAccessDeniedHandler())

@@ -36,4 +36,5 @@ public class Memberservice {
         Member member = memberRepository.findByEmail(email).orElseThrow();
         return member;
     }
+
 }

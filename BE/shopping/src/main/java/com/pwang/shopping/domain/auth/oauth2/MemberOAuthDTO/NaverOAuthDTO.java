@@ -1,4 +1,4 @@
-package com.pwang.shopping.domain.auth.oauth2.naver.MemberOAuthDTO;
+package com.pwang.shopping.domain.auth.oauth2.MemberOAuthDTO;
 
 import lombok.Data;
 

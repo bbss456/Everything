@@ -25,6 +25,9 @@ public class Member {
     private String birthyear;
     private String mobile;
 
+    @Enumerated(EnumType.STRING)
+    private OAuthType type;
+
    @Enumerated(EnumType.STRING)
     private Role role;
 
@@ -32,7 +35,7 @@ public class Member {
         return this.role.getKey();
     }
 
-    public Member makeEntityOfNamver(JSONObject jsonObject) {
+    public Member makeEntityOfNaver(JSONObject jsonObject) {
         String email = (String) jsonObject.get("email");
         String name = (String) jsonObject.get("name");
         String gender = (String) jsonObject.get("gender");
@@ -46,6 +49,31 @@ public class Member {
                 .birthyear(birthyear)
                 .mobile(mobile)
                 .role(Role.USER)
+                .type(OAuthType.NAVER)
+                .build();
+    }
+
+    public Member makeEntityOfKakao(JSONObject jsonObject) {
+        String email = (String) jsonObject.get("email");
+        String name = (String) jsonObject.get("name");
+        String gender = (String) jsonObject.get("gender");
+        String birthyear = (String) jsonObject.get("birthyear");
+        String mobile = (String) jsonObject.get("mobile");
+
+        if(gender.equals("male")) {
+            gender = "M";
+        } else {
+            gender = "F";
+        }
+
+        return Member.builder()
+                .name(name)
+                .email(email)
+                .gender(gender)
+                .birthyear(birthyear)
+                .mobile(mobile)
+                .role(Role.USER)
+                .type(OAuthType.KAKAO)
                 .build();
     }
 }

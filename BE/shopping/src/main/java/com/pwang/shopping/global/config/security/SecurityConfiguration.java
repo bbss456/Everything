@@ -1,7 +1,6 @@
 package com.pwang.shopping.global.config.security;
 
 import com.pwang.shopping.domain.member.entity.Role;
-import com.pwang.shopping.domain.auth.oauth2.naver.service.MemberServiceOauth2;
 import com.pwang.shopping.global.config.jwt.AuthenticationEntryPointHandler;
 import com.pwang.shopping.global.config.jwt.JwtAccessDeniedHandler;
 import com.pwang.shopping.global.config.jwt.JwtAuthenticationFilter;

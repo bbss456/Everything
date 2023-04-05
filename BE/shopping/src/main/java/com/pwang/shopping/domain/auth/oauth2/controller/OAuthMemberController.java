@@ -88,11 +88,6 @@ public class OAuthMemberController {
                 String.class
         );
 
-//        UriComponents uriBuilder = UriComponentsBuilder.fromHttpUrl(url)
-//                .queryParam("userId", 1)
-//                .queryParam("id", 1)
-//                .build(true);
-
         Member member = memberServiceOauth2.kakaoAuthOrSaveWithGetEmail(profileResponse.getBody());
         return new ResponseEntity<JwtTokenResponseDTO>(jwtService.createToken(member), this.header(), HttpStatus.OK);
     }

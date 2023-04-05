@@ -101,6 +101,7 @@ public class MemberServiceOauth2 {
 
         return member;
     }
+
     public Member googleAuthOrSaveWithGetEmail(String profile) throws ParseException {
         JSONParser parser = new JSONParser();
         JSONObject googleJsonObect = (JSONObject) parser.parse(profile);

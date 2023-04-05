@@ -1,6 +1,7 @@
 package com.pwang.shopping.domain.auth.oauth2.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.nimbusds.jose.Header;
 import com.nimbusds.jose.shaded.json.parser.ParseException;
 import com.pwang.shopping.domain.auth.jwt.responseDTO.JwtTokenResponseDTO;
 import com.pwang.shopping.domain.auth.jwt.service.JwtService;
@@ -13,6 +14,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
+
 import java.nio.charset.Charset;
 
 @RestController
@@ -87,4 +91,28 @@ public class OAuthMemberController {
         Member member = memberServiceOauth2.kakaoAuthOrSaveWithGetEmail(profileResponse.getBody());
         return new ResponseEntity<JwtTokenResponseDTO>(jwtService.createToken(member), this.header(), HttpStatus.OK);
     }
+
+    @GetMapping("/auth/google")
+    public ResponseEntity<JwtTokenResponseDTO> getUserInfo(@RequestParam String token) throws ParseException {
+        RestTemplate restTemplate = new RestTemplate();
+        String url = "https://www.googleapis.com/oauth2/v1/userinfo";
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-type", "application/x-www-form-urlencoded");
+
+        UriComponents uriBuilder = UriComponentsBuilder.fromHttpUrl(url)
+                .queryParam("access_token", token)
+                .build(true);
+
+        HttpEntity<Header> accessTokenRequest = new HttpEntity<>(headers);
+        ResponseEntity<String> profileResponse = restTemplate.exchange(
+                uriBuilder.toString(),
+                HttpMethod.GET,
+                accessTokenRequest,
+                String.class);
+
+        Member member = memberServiceOauth2.googleAuthOrSaveWithGetEmail(profileResponse.getBody());
+        return new ResponseEntity<>(jwtService.createToken(member), this.header(), HttpStatus.OK);
+    }
+
 }

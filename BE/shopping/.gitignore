@@ -39,3 +39,6 @@ out/
 ###mysql###
 shopping_db/
 shopping_db-conf/
+
+###SPRING###
+spring.profiles.include=oauth

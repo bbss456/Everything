@@ -47,7 +47,6 @@ public class Oauth2SampleTest {
                 accessTokenRequest,
                 String.class
         );
-        System.out.println(accessTokenResponse.getBody());
         assertEquals("200 OK",accessTokenResponse.getStatusCode().toString());
     }
 

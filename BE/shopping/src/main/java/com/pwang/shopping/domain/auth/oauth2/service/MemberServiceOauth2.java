@@ -101,4 +101,15 @@ public class MemberServiceOauth2 {
 
         return member;
     }
+    public Member googleAuthOrSaveWithGetEmail(String profile) throws ParseException {
+        JSONParser parser = new JSONParser();
+        JSONObject googleJsonObect = (JSONObject) parser.parse(profile);
+        String email =(String) googleJsonObect.get("email");
+        Member member = new Member();
+        member = memberRepository.findByEmailAndType(email,OAuthType.GOOGLE)
+                .orElse(member.makeEntityOfGoogle(googleJsonObect));
+        memberRepository.save(member);
+
+        return member;
+    }
 }

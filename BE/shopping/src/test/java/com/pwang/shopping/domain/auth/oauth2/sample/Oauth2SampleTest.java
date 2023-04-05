@@ -1,5 +1,6 @@
 package com.pwang.shopping.domain.auth.oauth2.sample;
 
+import com.nimbusds.jose.Header;
 import com.nimbusds.jose.shaded.json.JSONObject;
 import com.nimbusds.jose.shaded.json.parser.JSONParser;
 import com.nimbusds.jose.shaded.json.parser.ParseException;
@@ -12,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -74,6 +77,30 @@ public class Oauth2SampleTest {
         String email = (String) kakaojsonObject.get("email");
         System.out.println(email);
 
+        assertEquals("200 OK",accessTokenResponse.getStatusCode().toString());
+    }
+
+    @Test
+    @DisplayName("구글_회원정보")
+    void generateGoogleAuthCodeRequest() throws ParseException {
+        String token = "ya29.a0Ael9sCMKIwz_LJn6XmoJFZ-nvmVB2HpsP3mNsrH6CqfMSr-BovkPmcCmKeRb21y0EJCNh5KvdO4poGTgN5BEbkwpfRx0GjBeXmAhss3eMajGg9odXFmrEJ_nQL1wKcHt1H9g_a40sHoxObfX55xFWeNyYwjvaCgYKAWISARMSFQF4udJhnu2KVYszWnfO-68fhmz1Zg0163";
+        String url = "https://www.googleapis.com/oauth2/v1/userinfo";
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-type", "application/x-www-form-urlencoded");
+
+        UriComponents uriBuilder = UriComponentsBuilder.fromHttpUrl(url)
+                .queryParam("access_token", token)
+                .build(true);
+
+        HttpEntity<Header> accessTokenRequest = new HttpEntity<>(headers);
+        ResponseEntity<String> accessTokenResponse = restTemplate.exchange(
+                uriBuilder.toString(),
+                HttpMethod.GET,
+                accessTokenRequest,
+                String.class
+        );
+        System.out.println(accessTokenResponse);
         assertEquals("200 OK",accessTokenResponse.getStatusCode().toString());
     }
 }

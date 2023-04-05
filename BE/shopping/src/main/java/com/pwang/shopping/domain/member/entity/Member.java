@@ -76,5 +76,23 @@ public class Member {
                 .type(OAuthType.KAKAO)
                 .build();
     }
+
+    public Member makeEntityOfGoogle(JSONObject jsonObject) {
+        String email = (String) jsonObject.get("email");
+        String name = (String) jsonObject.get("name");
+        String gender = (String) jsonObject.get("gender");
+        String birthyear = (String) jsonObject.get("birthyear");
+        String mobile = (String) jsonObject.get("mobile");
+
+        return Member.builder()
+                .name(name)
+                .email(email)
+                .gender(gender)
+                .birthyear(birthyear)
+                .mobile(mobile)
+                .role(Role.USER)
+                .type(OAuthType.GOOGLE)
+                .build();
+    }
 }
 

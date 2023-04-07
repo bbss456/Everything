@@ -1,7 +1,6 @@
 package com.pwang.shopping.domain.delivery.entity;
 
 import com.pwang.shopping.domain.order.entity.Order;
-
 import javax.persistence.*;
 
 @Entity

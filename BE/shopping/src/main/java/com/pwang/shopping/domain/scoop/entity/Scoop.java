@@ -1,7 +1,6 @@
 package com.pwang.shopping.domain.scoop.entity;
 
 import com.pwang.shopping.domain.item.entity.Item;
-
 import javax.persistence.*;
 
 @Entity

@@ -1,8 +1,6 @@
 package com.pwang.shopping.domain.address.entity;
 
-
 import com.pwang.shopping.domain.member.entity.Member;
-
 import javax.persistence.*;
 
 @Entity

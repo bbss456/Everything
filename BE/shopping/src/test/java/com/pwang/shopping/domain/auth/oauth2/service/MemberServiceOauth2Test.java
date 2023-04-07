@@ -16,6 +16,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.transaction.Transactional;
 import java.beans.Transient;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -52,4 +53,5 @@ class MemberServiceOauth2Test {
 
         assertEquals(email, member.getEmail());
     }
+
 }

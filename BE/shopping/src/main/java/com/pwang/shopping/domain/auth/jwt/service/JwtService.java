@@ -15,8 +15,8 @@ public class JwtService {
     public JwtTokenResponseDTO createToken(Member member) {
 
         return JwtTokenResponseDTO.builder()
-                .accessToken(jwtTokenProvider.createAccessToken(member.getEmail(), member.getRole().toString()))
-                .refreshToken(jwtTokenProvider.createJwtRefreshToken(member.getEmail()))
+                .accessToken(jwtTokenProvider.createAccessToken(member))
+                .refreshToken(jwtTokenProvider.createJwtRefreshToken(member))
                 .build();
     }
 

@@ -1,6 +1,7 @@
 package com.pwang.shopping.global.config.jwt;
 
 import com.pwang.shopping.domain.member.entity.CustumMemberDetail;
+import com.pwang.shopping.domain.member.entity.Member;
 import com.pwang.shopping.domain.member.service.MemberJwtCuscomService;
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
@@ -23,10 +24,11 @@ public class JwtTokenProvider {
 
     private final MemberJwtCuscomService memberJwtCuscomService;
 
-    public static String createAccessToken(String email, String roles) {
+    public static String createAccessToken(Member member) {
         Claims claims = Jwts.claims();
-        claims.put("email", email);
-        claims.put("ROLE", roles);
+        claims.put("email", member.getEmail());
+        claims.put("ROLE", member.getRole().toString());
+        claims.put("ID", member.getId().toString());
         Date now = new Date();
 
         return "Bearae " + Jwts.builder()
@@ -39,9 +41,10 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-    public static String createJwtRefreshToken(String email) {
+    public static String createJwtRefreshToken(Member member) {
         Claims claims = Jwts.claims();
-        claims.put("email", email);
+        claims.put("id", member.getId().toString());
+        claims.put("email", member.getEmail());
         Date now = new Date();
         Date expiration = new Date(now.getTime() + REFRESH_TOKEN_VALID_TIME);
 
@@ -67,7 +70,8 @@ public class JwtTokenProvider {
 //    }
 
     public String getUserPk(String token) {
-        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
+        Claims claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
+        return (String) claims.get("ID");
     }
 
     public String resolveToken(HttpServletRequest request) {

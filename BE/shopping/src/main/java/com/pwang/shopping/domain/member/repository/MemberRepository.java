@@ -5,8 +5,9 @@ import com.pwang.shopping.domain.member.entity.OAuthType;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
+import java.util.UUID;
 
-public interface MemberRepository  extends JpaRepository<Member,String> {
+public interface MemberRepository  extends JpaRepository<Member, UUID> {
     Optional<Member> findByEmail(String email);
     Optional<Member> findByEmailAndType(String email, OAuthType type);
 }

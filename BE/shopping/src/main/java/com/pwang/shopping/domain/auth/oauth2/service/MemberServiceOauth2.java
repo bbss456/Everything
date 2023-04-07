@@ -1,11 +1,9 @@
 package com.pwang.shopping.domain.auth.oauth2.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nimbusds.jose.shaded.json.JSONObject;
 import com.nimbusds.jose.shaded.json.parser.JSONParser;
 import com.nimbusds.jose.shaded.json.parser.ParseException;
-import com.pwang.shopping.domain.auth.oauth2.MemberOAuthDTO.NaverOAuthDTO;
 import com.pwang.shopping.domain.member.entity.Member;
 import com.pwang.shopping.domain.member.entity.OAuthType;
 import com.pwang.shopping.domain.member.repository.MemberRepository;

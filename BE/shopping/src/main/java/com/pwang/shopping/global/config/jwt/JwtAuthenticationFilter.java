@@ -22,6 +22,13 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
 
         String refreshToken = jwtTokenProvider.resolveRefreshToken((HttpServletRequest) request);
 
+        try {
+           token = token.split("Bearae ")[1];
+        } catch(Exception e) {
+            request.setAttribute("exception", "MalformedJwtException");
+        }
+
+
         if (token != null && jwtTokenProvider.validateToken(request, token)) {
             try {
                 Authentication authentication = jwtTokenProvider.getAuthentication(token);

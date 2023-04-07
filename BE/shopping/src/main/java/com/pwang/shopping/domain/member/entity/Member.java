@@ -1,12 +1,16 @@
 package com.pwang.shopping.domain.member.entity;
 
 import com.nimbusds.jose.shaded.json.JSONObject;
+import com.pwang.shopping.domain.address.entity.Address;
+import com.pwang.shopping.domain.order.entity.Order;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -22,8 +26,8 @@ public class Member {
     @Column(columnDefinition = "BINARY(16)")
     private UUID id;
     private String email;
-    private String password;
     private String name;
+    private String password;
     private String gender;
     private String birthyear;
     private String mobile;
@@ -33,6 +37,14 @@ public class Member {
 
    @Enumerated(EnumType.STRING)
     private Role role;
+
+   @Builder.Default
+   @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+   private List<Address> addressList = new ArrayList<>();
+
+   @Builder.Default
+   @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+   private List<Order>  orderList = new ArrayList<>();
 
     public String getRoleKey() {
         return this.role.getKey();

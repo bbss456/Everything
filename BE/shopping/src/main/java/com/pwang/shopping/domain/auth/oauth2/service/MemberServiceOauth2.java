@@ -55,7 +55,6 @@ public class MemberServiceOauth2 {
         return new HttpEntity<>(paramList, headers);
     }
 
-
     public HttpEntity<HttpHeaders> getProfile(ResponseEntity<String> accessTokenResponse)
             throws JsonProcessingException, ParseException {
 

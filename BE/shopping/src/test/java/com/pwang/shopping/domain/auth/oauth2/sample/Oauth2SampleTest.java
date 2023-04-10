@@ -69,10 +69,8 @@ public class Oauth2SampleTest {
                 accessTokenRequest,
                 String.class
         );
-        System.out.println(accessTokenResponse);
         JSONParser parser = new JSONParser();
         JSONObject kakaojsonObject = (JSONObject) parser.parse(accessTokenResponse.getBody());
-        System.out.println(kakaojsonObject);
         kakaojsonObject = (JSONObject) kakaojsonObject.get("kakao_account");
         String email = (String) kakaojsonObject.get("email");
         System.out.println(email);

@@ -3,7 +3,6 @@ package com.pwang.shopping.domain.member.service;
 import com.pwang.shopping.domain.member.entity.Member;
 import com.pwang.shopping.domain.member.repository.MemberRepository;
 import com.pwang.shopping.domain.member.requestDTO.MemberCreateRequestDTO;
-import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -32,7 +31,6 @@ public class Memberservice {
     }
 
     public Member findMember(String email) {
-
         Member member = memberRepository.findByEmail(email).orElseThrow();
         return member;
     }

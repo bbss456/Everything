@@ -13,15 +13,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-
 import javax.transaction.Transactional;
-import java.beans.Transient;
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(SpringExtension.class)
-@SpringBootTest(classes = ShoppingApplication.class )
+@SpringBootTest(classes = ShoppingApplication.class)
 class MemberServiceOauth2Test {
 
     @Autowired

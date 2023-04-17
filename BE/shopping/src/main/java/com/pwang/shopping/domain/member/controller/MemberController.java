@@ -11,10 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.nio.charset.Charset;
 
@@ -38,6 +35,17 @@ public class MemberController {
 
         memberservice.create(memberCreateRequestDTO);
         return new ResponseEntity<Boolean>(Boolean.TRUE,this.header(), HttpStatus.OK);
+    }
+
+    @GetMapping("/api/v1/member/{email}/{type}")
+    public ResponseEntity<MemberCreateRequestDTO> create(@PathVariable("email") String email, @PathVariable("type") String type) {
+
+        Member member = memberservice.findMember(email, type);
+        MemberCreateRequestDTO MemberCreateRequestDTO = com.pwang.shopping.domain.member.requestDTO.MemberCreateRequestDTO
+                .builder()
+                .name(member.getName())
+                .build();
+        return new ResponseEntity<MemberCreateRequestDTO>(MemberCreateRequestDTO, this.header(), HttpStatus.OK);
     }
 
 }

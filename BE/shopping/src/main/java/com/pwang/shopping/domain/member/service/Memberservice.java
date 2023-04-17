@@ -1,6 +1,7 @@
 package com.pwang.shopping.domain.member.service;
 
 import com.pwang.shopping.domain.member.entity.Member;
+import com.pwang.shopping.domain.member.entity.OAuthType;
 import com.pwang.shopping.domain.member.repository.MemberRepository;
 import com.pwang.shopping.domain.member.requestDTO.MemberCreateRequestDTO;
 import lombok.RequiredArgsConstructor;
@@ -30,8 +31,9 @@ public class Memberservice {
         return Boolean.TRUE;
     }
 
-    public Member findMember(String email) {
-        Member member = memberRepository.findByEmail(email).orElseThrow();
+    public Member findMember(String email, String type) {
+        OAuthType typeEnum = OAuthType.valueOf(type);
+        Member member= memberRepository.findByEmailAndType(email, typeEnum).orElseThrow();
         return member;
     }
 

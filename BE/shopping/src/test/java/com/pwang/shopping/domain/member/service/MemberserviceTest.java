@@ -4,17 +4,14 @@ import com.nimbusds.jose.shaded.json.JSONObject;
 import com.pwang.shopping.ShoppingApplication;
 import com.pwang.shopping.domain.member.entity.Member;
 import com.pwang.shopping.domain.member.entity.OAuthType;
-import com.pwang.shopping.domain.member.entity.Role;
 import com.pwang.shopping.domain.member.repository.MemberRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import javax.transaction.Transactional;
 
 import java.util.List;
 
@@ -67,7 +64,6 @@ class MemberserviceTest {
     void findByAllMember() {
 
        List<Member> memberList = memberRepository.findAll();
-
     }
 
 

@@ -1,4 +1,4 @@
-package com.pwang.shopping.domain.member.requestDTO;
+package com.pwang.shopping.domain.member.requestdto;
 
 import lombok.Builder;
 import lombok.Data;
@@ -12,9 +12,7 @@ import javax.persistence.Id;
 public class MemberCreateRequestDTO {
     @Id
     private String email;
-
     private String password;
-
     private String name;
 }
 

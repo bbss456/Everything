@@ -3,11 +3,16 @@ package com.pwang.shopping.domain.member.service;
 import com.pwang.shopping.domain.member.entity.Member;
 import com.pwang.shopping.domain.member.entity.OAuthType;
 import com.pwang.shopping.domain.member.repository.MemberRepository;
-import com.pwang.shopping.domain.member.requestDTO.MemberCreateRequestDTO;
+import com.pwang.shopping.domain.member.requestdto.MemberCreateRequestDTO;
+import com.pwang.shopping.domain.member.responsedto.ResponseMemberDTO;
+import com.pwang.shopping.domain.member.responsedto.ResponseMemberListDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -37,4 +42,14 @@ public class Memberservice {
         return member;
     }
 
+    public ResponseMemberListDTO findAllMember() {
+        List<Member> memberList = memberRepository.findAll();
+        List<ResponseMemberDTO> responseMemberDTOList = memberList.stream().map(ResponseMemberDTO::new).collect(Collectors.toList());
+
+        ResponseMemberListDTO responseMemberListDTO = new ResponseMemberListDTO();
+        responseMemberListDTO.setResponseMemberDTOList(responseMemberDTOList);
+        responseMemberListDTO.setCount(responseMemberDTOList.size());
+
+        return responseMemberListDTO;
+    }
 }

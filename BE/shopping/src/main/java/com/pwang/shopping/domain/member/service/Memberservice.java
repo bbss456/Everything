@@ -47,7 +47,7 @@ public class Memberservice {
         List<ResponseMemberDTO> responseMemberDTOList = memberList.stream().map(ResponseMemberDTO::new).collect(Collectors.toList());
 
         ResponseMemberListDTO responseMemberListDTO = new ResponseMemberListDTO();
-        responseMemberListDTO.setResponseMemberDTOList(responseMemberDTOList);
+        responseMemberListDTO.setMemberList(responseMemberDTOList);
         responseMemberListDTO.setCount(responseMemberDTOList.size());
 
         return responseMemberListDTO;

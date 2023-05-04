@@ -22,7 +22,6 @@ public class MemberController {
 
     private final Memberservice memberservice;
 
-
     public HttpHeaders header() {
         HttpHeaders header = new HttpHeaders();
         header.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));

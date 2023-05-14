@@ -23,7 +23,6 @@ class MemberserviceTest {
     @Autowired
     MemberRepository memberRepository;
 
-
     @Test
     @DisplayName("네이버_생성_및_조회")
     void saveMember() {
@@ -66,7 +65,6 @@ class MemberserviceTest {
        List<Member> memberList = memberRepository.findAll();
     }
 
-
     @Test
     @DisplayName("회원멤버_삭제")
     void deleteMembeer() {
@@ -74,6 +72,5 @@ class MemberserviceTest {
         memberRepository.delete(memberRepository.findByEmailAndType(email, OAuthType.NAVER)
                 .orElseThrow()
         );
-
     }
 }

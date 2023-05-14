@@ -6,6 +6,8 @@ import com.pwang.shopping.domain.member.responsedto.ResponseMemberDTO;
 import com.pwang.shopping.domain.member.responsedto.ResponseMemberListDTO;
 import com.pwang.shopping.domain.member.service.Memberservice;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -52,9 +54,9 @@ public class MemberController {
     }
 
     @GetMapping("/api/v1/members")
-    public ResponseEntity<ResponseMemberListDTO> getMemberList() {
+    public ResponseEntity<ResponseMemberListDTO> getMemberList(final Pageable pageable) {
 
-        return new ResponseEntity<ResponseMemberListDTO>(memberservice.findAllMember(), this.header(), HttpStatus.OK);
+        return new ResponseEntity<ResponseMemberListDTO>(memberservice.findAllMember(pageable), this.header(), HttpStatus.OK);
     }
 
 }

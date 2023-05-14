@@ -29,10 +29,10 @@ class MemberServiceOauth2Test {
 
     @Test
     @DisplayName("네이버_조회_및_저장")
-    @Transactional
+//    @Transactional
     public void naverAuthOrSaveWithGetEmail() throws ParseException {
 
-        String email = "test@naver.com";
+        String email = "test8@naver.com";
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("email", email);
         jsonObject.put("password", "testpwd");

@@ -8,6 +8,9 @@ import com.pwang.shopping.domain.member.responsedto.ResponseMemberDTO;
 import com.pwang.shopping.domain.member.responsedto.ResponseMemberListDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -42,9 +45,11 @@ public class Memberservice {
         return member;
     }
 
-    public ResponseMemberListDTO findAllMember() {
-        List<Member> memberList = memberRepository.findAll();
-        List<ResponseMemberDTO> responseMemberDTOList = memberList.stream().map(ResponseMemberDTO::new).collect(Collectors.toList());
+    public ResponseMemberListDTO findAllMember(Pageable pageable) {
+
+        Page<Member> memberList =  memberRepository.findAll(pageable);
+
+        List<ResponseMemberDTO> responseMemberDTOList = memberList.getContent().stream().map(ResponseMemberDTO::new).collect(Collectors.toList());
 
         ResponseMemberListDTO responseMemberListDTO = new ResponseMemberListDTO();
         responseMemberListDTO.setMemberList(responseMemberDTOList);

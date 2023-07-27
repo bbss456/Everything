@@ -63,6 +63,7 @@ public class JwtTokenProvider {
         return new UsernamePasswordAuthenticationToken(custumMemberDetail, "", custumMemberDetail.getAuthorities());
     }
 
+    //todo refeshToken
 //    public Authentication getAuthenticationRefreshToken(String refreshToken) {
 //        User user = user.findwithrefreshToken(getClaimsRefresh(refreshToken).get("value").toString()).orElseThrow(() -> new BusinessExceptionHandler("토큰이 존재하지 않습니다.", ErrorCode.ENTITY_NOT_FOUND));
 //        UserDetails userDetails = userDetailsService.loadUserByUsername(api.getApiId());

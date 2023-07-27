@@ -22,7 +22,6 @@ import java.util.stream.Collectors;
 
 public class Memberservice {
 
-
     private final MemberRepository memberRepository;
 
     @Autowired

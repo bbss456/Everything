@@ -38,14 +38,16 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
             }
         }
 
-//        if (refreshToken != null && jwtTokenProvider.validateRefreshToken(request, refreshToken)) {
-//            try {
-//                //Authentication authentication = jwtTokenProvider.getAuthenticationRefreshToken(refreshToken);
-//                SecurityContextHolder.getContext().setAuthentication(authentication);
-//            } catch (RuntimeException error) {
-//                request.setAttribute("exception", "MalformedJwtException");
-//            }
-//        }
+
+        //todo 리프레쉬 토큰 개발
+/*        if (refreshToken != null && jwtTokenProvider.validateRefreshToken(request, refreshToken)) {
+            try {
+                //Authentication authentication = jwtTokenProvider.getAuthenticationRefreshToken(refreshToken);
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            } catch (RuntimeException error) {
+                request.setAttribute("exception", "MalformedJwtException");
+            }
+        }*/
         chain.doFilter(request, response);
     }
 }

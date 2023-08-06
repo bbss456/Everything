@@ -1,5 +1,6 @@
 package com.pwang.shopping.domain.item.entity;
 
+import com.pwang.shopping.domain.auditing.BaseTimeEntity;
 import com.pwang.shopping.domain.orderitem.entity.OrderItem;
 import com.pwang.shopping.domain.scoop.entity.Scoop;
 import org.springframework.data.annotation.CreatedDate;
@@ -13,7 +14,7 @@ import java.util.List;
 
 @Entity
 @EntityListeners(value = AuditingEntityListener.class)
-public class Item {
+public class Item extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,12 +23,6 @@ public class Item {
     private String name;
     private int price;
     private int count;
-
-    @CreatedDate
-    private LocalTime createdAt;
-
-    @LastModifiedDate
-    private LocalDateTime modifiedDate;
 
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderItem> orderItemList = new ArrayList<>();

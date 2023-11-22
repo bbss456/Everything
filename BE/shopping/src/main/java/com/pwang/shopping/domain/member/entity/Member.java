@@ -1,8 +1,7 @@
 package com.pwang.shopping.domain.member.entity;
 
 import com.nimbusds.jose.shaded.json.JSONObject;
-import com.pwang.shopping.domain.address.entity.Address;
-import com.pwang.shopping.domain.order.entity.Order;
+import com.pwang.shopping.domain.auditing.BaseTimeEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,7 +9,6 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -18,7 +16,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Member {
+public class Member extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(generator = "uuid2")
@@ -37,14 +35,6 @@ public class Member {
 
    @Enumerated(EnumType.STRING)
     private Role role;
-
-   @Builder.Default
-   @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
-   private List<Address> addressList = new ArrayList<>();
-
-   @Builder.Default
-   @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
-   private List<Order>  orderList = new ArrayList<>();
 
     public String getRoleKey() {
         return this.role.getKey();
@@ -109,5 +99,6 @@ public class Member {
                 .type(OAuthType.GOOGLE)
                 .build();
     }
+
 }
 

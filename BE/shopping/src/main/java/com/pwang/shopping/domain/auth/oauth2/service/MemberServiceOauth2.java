@@ -58,13 +58,9 @@ public class MemberServiceOauth2 {
     public HttpEntity<HttpHeaders> getProfile(ResponseEntity<String> accessTokenResponse)
             throws JsonProcessingException, ParseException {
 
-        System.out.println(kakaoClientId);
-        System.out.println(kakaoRedirect_url);
         JSONParser parser = new JSONParser();
         JSONObject jsonObject = (JSONObject) parser.parse(accessTokenResponse.getBody());
         String accessToken = (String) jsonObject.get("access_token");
-        System.out.println(accessTokenResponse.getBody());
-        System.out.println(accessToken);
         HttpHeaders profileRequestHeader = new HttpHeaders();
         profileRequestHeader.add("Authorization", "Bearer " + accessToken);
 

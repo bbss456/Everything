@@ -52,9 +52,9 @@ public class jwtTestCode {
         if(jwtToken.equals("")) {
            result = Boolean.FALSE;
         }
-
         assertEquals(result, Boolean.TRUE);
     }
+
     @Test
     @DisplayName("토큰_ID 가져오기")
     public void getUserPk(){

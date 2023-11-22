@@ -57,7 +57,6 @@ spring:
             user-info-uri: https://kapi.kakao.com/v2/user/me
             user-name-attribute: response
 
-
 logging:
   level:
     com.pwang.project : Debug
